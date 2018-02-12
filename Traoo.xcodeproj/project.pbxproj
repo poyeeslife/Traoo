@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EC66E485203185D800CE4C5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC66E484203185D800CE4C5A /* AppDelegate.swift */; };
-		EC66E487203185D800CE4C5A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC66E486203185D800CE4C5A /* ViewController.swift */; };
+		EC66E487203185D800CE4C5A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC66E486203185D800CE4C5A /* TableViewController.swift */; };
 		EC66E48A203185D800CE4C5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC66E488203185D800CE4C5A /* Main.storyboard */; };
 		EC66E48C203185D800CE4C5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC66E48B203185D800CE4C5A /* Assets.xcassets */; };
 		EC66E48F203185D800CE4C5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC66E48D203185D800CE4C5A /* LaunchScreen.storyboard */; };
@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		EC66E481203185D800CE4C5A /* Traoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC66E484203185D800CE4C5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EC66E486203185D800CE4C5A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EC66E486203185D800CE4C5A /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		EC66E489203185D800CE4C5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC66E48B203185D800CE4C5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC66E48E203185D800CE4C5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				EC66E484203185D800CE4C5A /* AppDelegate.swift */,
-				EC66E486203185D800CE4C5A /* ViewController.swift */,
+				EC66E486203185D800CE4C5A /* TableViewController.swift */,
 				EC66E488203185D800CE4C5A /* Main.storyboard */,
 				EC66E48B203185D800CE4C5A /* Assets.xcassets */,
 				EC66E48D203185D800CE4C5A /* LaunchScreen.storyboard */,
@@ -136,7 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC66E487203185D800CE4C5A /* ViewController.swift in Sources */,
+				EC66E487203185D800CE4C5A /* TableViewController.swift in Sources */,
 				EC66E485203185D800CE4C5A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
