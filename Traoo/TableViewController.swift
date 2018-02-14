@@ -15,7 +15,8 @@ class TableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
- let itemArray = ["do first thing" , "do second", "do third"]
+ var itemArray = ["do first thing" , "do second", "do third"]
+    // var becoz we need to add something..
     
     //MARK - Tableview Datasource Method
     
@@ -46,6 +47,31 @@ class TableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         //等佢CLICK完淨係閃一閃。
     }
-
+// MARK - make new item
+    
+    @IBAction func addNewItemPressed(_ sender: UIBarButtonItem) {
+    //一整個alert就要做晒以下嘅野。
+        
+        var textfield = UITextField()
+        
+        let alert = UIAlertController(title: "Add To Do Item", message: "", preferredStyle: .alert)
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item!"
+            textfield = alertTextField
+        }
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            // what will happen once the user clicks the add item button on our UIAlert
+            print(textfield.text)
+            self.itemArray.append(textfield.text!)
+            self.tableView.reloadData()
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
 }
 
