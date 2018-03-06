@@ -13,13 +13,22 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let items = defaults.array(forKey: "ToDoListArray") as? [String]{
+        let newItem = Item()
+        newItem.title = "do first thing"
+        itemArray.append(newItem)
         
+        
+        if let items = defaults.array(forKey: "ToDoListArray") as? [Item]{
+
             itemArray = items}
+        
         // if statement becoz if theres no saved data on todolistarray, app will crashed.
     }
 
- var itemArray = ["do first thing" , "do second", "do third"]
+// var itemArray = ["do first thing" , "do second", "do third"]
+     var itemArray = [Item]()
+    // make the item array of an array of item.swift file (DataModel) object
+
     let defaults = UserDefaults.standard
     // var becoz we need to add something..
     
@@ -31,7 +40,19 @@ class TableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoItemCell", for: indexPath)
-        cell.textLabel?.text = itemArray[indexPath.row]
+        cell.textLabel?.text = itemArray[indexPath.row].title
+        //****   .title becoz now the itemArray is no longer string.. it's a dictionary with title and done property
+        
+        
+        cell.accessoryType = itemArray[indexPath.row].done == true ? .checkmark : .none
+        
+        //        ternary operator   structure:  value = condition? value if true: value if false (not in boolean...it's kind of if statement)
+        //equals to ::::    if itemArray[indexPath.row].done == true {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//
+//        }
         return cell
     }
 //MARK - TableView Delegate Method
@@ -39,14 +60,21 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        didSelectRow is used to detect which row we are at
         // print (itemArray[indexPath.row])
+
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-           tableView.cellForRow(at: indexPath)?.accessoryType = .none}
-        else{
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
+        //      **menas set it to the opposite value..only works on boolean, this line equals to:  if itemArray[indexPath.row].done == false { itemArray[indexPath.row].done = true }
+//        else {itemArray[indexPath.row].done = false}
         
-        //grabbing a reference to the cell that is at a particular indexpath
+        tableView.reloadData()
+        
+//        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+//           tableView.cellForRow(at: indexPath)?.accessoryType = .none}
+//        else{
+//            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//        }
+//
+//        //grabbing a reference to the cell that is at a particular indexpath
         
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -69,7 +97,11 @@ class TableViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             // what will happen once the user clicks the add item button on our UIAlert
             print(textfield.text)
-            self.itemArray.append(textfield.text!)
+            
+            let newItem = Item()
+            newItem.title = textfield.text!
+            self.itemArray.append(newItem)
+            
             self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             //key is use to identify the array in user defaults
             self.tableView.reloadData()
