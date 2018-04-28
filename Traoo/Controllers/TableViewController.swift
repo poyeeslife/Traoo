@@ -9,19 +9,21 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let newItem = Item()
-        newItem.title = "do first thing"
-        itemArray.append(newItem)
         
         
-        if let items = defaults.array(forKey: "ToDoListArray") as? [Item]{
-
-            itemArray = items}
+       loadItems()
         
+//        if let items = defaults.array(forKey: "ToDoListArray") as? [Item]{
+//
+//            itemArray = items}
+//
         // if statement becoz if theres no saved data on todolistarray, app will crashed.
     }
 
@@ -29,7 +31,7 @@ class TableViewController: UITableViewController {
      var itemArray = [Item]()
     // make the item array of an array of item.swift file (DataModel) object
 
-    let defaults = UserDefaults.standard
+//    let defaults = UserDefaults.standard
     // var becoz we need to add something..
     
     //MARK - Tableview Datasource Method
@@ -40,6 +42,8 @@ class TableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoItemCell", for: indexPath)
+        
+        
         cell.textLabel?.text = itemArray[indexPath.row].title
         //****   .title becoz now the itemArray is no longer string.. it's a dictionary with title and done property
         
@@ -65,8 +69,8 @@ class TableViewController: UITableViewController {
         
         //      **menas set it to the opposite value..only works on boolean, this line equals to:  if itemArray[indexPath.row].done == false { itemArray[indexPath.row].done = true }
 //        else {itemArray[indexPath.row].done = false}
-        
-        tableView.reloadData()
+        saveItems()
+//        tableView.reloadData()
         
 //        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
 //           tableView.cellForRow(at: indexPath)?.accessoryType = .none}
@@ -92,6 +96,8 @@ class TableViewController: UITableViewController {
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new item!"
             textfield = alertTextField
+            
+            self.saveItems()
         }
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
@@ -101,21 +107,53 @@ class TableViewController: UITableViewController {
             let newItem = Item()
             newItem.title = textfield.text!
             self.itemArray.append(newItem)
+
+            self.saveItems()
+                    
+            }
             
-            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
-            //key is use to identify the array in user defaults
+//            which will encode our data namely our itemArray into a property list
+            
+            
+//            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
+////            //key is use to identify the array in user defaults
             self.tableView.reloadData()
-        }
+        
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func saveItems() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(itemArray)
+
+            try data.write (to: dataFilePath!)
+        }
+        catch { print ("Error encoding item array, \(error)")
+            
+        }
         
     }
     
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!){
+            let decoder = PropertyListDecoder ()
+            do {
+            itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print ("Error occured when decoding")
+                
+            }
+        
+    }
 }
 
-// use the saved items to load up our tableview to load up all the data
+
+// use the saved items to load up our tableview fto load up all the data
 // we can view our data inside our user default and we can prove that the data has been saved
 //user def gets saved in a plist file.. thats why everything we saved need to be a key-value pair.. we need a key (i.e. "ToDoListArray" to retrieve the item and then add a value of any type (e.g. string/dictionary/array)
 // need to run in viewDiDLoad
 
+}
